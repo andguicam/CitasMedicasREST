@@ -65,6 +65,31 @@ public class AccesoBaseDatos {
 		return usuario;
 	}
 
+		public static List<Usuario> obtenerUsuarios (Connection conn) throws Exception{
+		List <Usuario> usuarios = new LinkedList<Usuario>(); 
+		PreparedStatement query = conn.prepareStatement("SELECT * from [dbo].[usuario];"); 
+		ResultSet resultSet = null; 
+		try {
+			resultSet = query.executeQuery();
+		} catch (Exception e) {
+			throw new Exception("Error a la hora de obtener todos los usuarios"); 
+		}
+		while (resultSet.next()){
+			String dni = resultSet.getString("userDni");
+			String pass = resultSet.getString("pass");
+			String nombre = resultSet.getString("nombre");
+			String apellidos = resultSet.getString("apellidos");
+			Date fechaDeNacimiento = new Date(resultSet.getTimestamp("fechaNacimiento").getTime());
+			String direccion = resultSet.getString("direccion");
+			String tipo = resultSet.getString("tipo");
+			Usuario usuario = new Usuario(nombre, apellidos, dni, pass, fechaDeNacimiento, direccion, tipo); 
+
+			usuarios.add(usuario); 
+		}
+
+		return usuarios; 
+	}
+
 	public static Boolean setUsuario (Connection conn, String nombre, String apellidos, String dni, String password, Date fechaDeNacimiento, String direccion, String tipo) throws Exception{
 		Boolean esAgregado = false; 
 		PreparedStatement insertStatement = 
