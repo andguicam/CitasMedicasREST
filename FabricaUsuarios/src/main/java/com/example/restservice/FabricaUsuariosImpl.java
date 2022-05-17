@@ -5,6 +5,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 
 public class FabricaUsuariosImpl extends UnicastRemoteObject implements FabricaUsuarios{
     // Variable donde se guarda la conexion que se establece con la base de datos
@@ -108,4 +109,17 @@ public class FabricaUsuariosImpl extends UnicastRemoteObject implements FabricaU
         return haSidoModificado;
     }
 
+    @Override
+    public List<Usuario> obtenerUsuarios() throws RemoteException{
+        List<Usuario> lista;
+        try {
+            lista = AccesoBaseDatos.obtenerUsuarios(conn);
+            return lista;
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
+        
+    }
 }

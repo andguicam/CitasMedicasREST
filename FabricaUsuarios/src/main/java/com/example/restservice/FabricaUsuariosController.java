@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -111,6 +112,18 @@ public class FabricaUsuariosController {
             // TODO Auto-generated catch block
             e.printStackTrace();
             return false;
+        }
+    }
+
+    @GetMapping("/obtenerUsuarios")
+    public List<Usuario> obtenerUsuarios(){
+        try {
+            List<Usuario> lista= this.fu.obtenerUsuarios();
+            return lista;
+        } catch (RemoteException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
         }
     }
 

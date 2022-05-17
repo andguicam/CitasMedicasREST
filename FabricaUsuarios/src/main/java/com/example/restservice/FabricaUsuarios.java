@@ -9,4 +9,5 @@ public interface FabricaUsuarios extends Remote {
     Boolean eliminarUsuario(Usuario usuario) throws RemoteException;
     Usuario getUsuario(String DNI, String tipo) throws RemoteException;
     Boolean modificarUsuario(Usuario user_antiguo, Usuario user_nuevo) throws RemoteException;
+    List<Usuario> obtenerUsuarios() throws RemoteException;
 }
