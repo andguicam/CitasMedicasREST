@@ -8,15 +8,17 @@ public class Usuario implements Serializable {
 	private String nombre;
     private String apellidos;
     private String dni;
+    private String email; 
     private String password;
     private Date fechaDeNacimiento;
     private String direccion;
     private String tipo_usuario;
 
-    public Usuario(String nom, String ap, String d, String p, Date fech, String dir,String tipo) {
+    public Usuario(String nom, String ap, String d, String e, String p, Date fech, String dir,String tipo) {
         nombre = nom;
         apellidos = ap;
         dni = d;
+        email = e; 
         password = p; 
         fechaDeNacimiento = fech;
         direccion = dir;
@@ -35,6 +37,11 @@ public class Usuario implements Serializable {
     public String getDni() {
         return dni;
     }
+
+    public String getEmail(){
+        return email; 
+    }
+
     public String getPassword(){
         return password; 
     }
@@ -63,6 +70,10 @@ public class Usuario implements Serializable {
         this.dni=dni;
     }
 
+    public void setEmail(String email){
+        this.email = email; 
+    }
+
     public void setPassword(String password){
         this.password = password; 
     }
@@ -81,6 +92,7 @@ public class Usuario implements Serializable {
 		return "Nombre: "+ this.nombre + 
 			 "\nApellidos: " + this.apellidos + 
 			 "\nDNI: " +this.dni +
+             "\nE-mail: " +this.email +
 			 "\nFecha de nacimiento: "+ this.fechaDeNacimiento + 
 			 "\nDirección: "+ this.direccion+
 			 "\nTipo de usuario: " + this.tipo_usuario;

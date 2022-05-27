@@ -39,11 +39,11 @@ public class CitasController {
 
     @GetMapping("/citasReservadas")
     public List<Cita> citasReservadas(
-    @RequestParam( value = "dniPaciente") String dniPaciente
+    @RequestParam( value = "idPaciente") String idPaciente
     ) {
         List<Cita> citas = null; 
         try {
-            citas =  AccesoBaseDatosCitas.citasReservadas(conn, dniPaciente);
+            citas =  AccesoBaseDatosCitas.citasReservadas(conn, idPaciente);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -70,8 +70,7 @@ public class CitasController {
             haSidoModificado = AccesoBaseDatosCitas.reservaCita(conn, dniPaciente, idCita);
         } catch (Exception e) {
             System.out.println(e);
-        }
-
+        } 
         return haSidoModificado;
     }
 

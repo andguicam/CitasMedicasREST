@@ -61,10 +61,8 @@ public class Cita implements Serializable{
     
     public String toString () {
     	
-    	return "ID: " + this.id + 
-    			" | Fecha de inicio: "+ this.fechaInicio + 
-    			" | Fecha de fin: "+ this.fechaFin + 
-    			" | Consulta: "+ this.consulta + 
-    			" | Medico Responsable: " + this.medicoResponsable.getNombre() + " " + this.medicoResponsable.getApellidos(); 
+    	return  " Fecha: "+ this.fechaInicio +  "\n" +
+    			"Consulta: "+ this.consulta + "\n" +
+    			"Medico: " + this.medicoResponsable.getNombre() + " " + this.medicoResponsable.getApellidos(); 
     }
 }

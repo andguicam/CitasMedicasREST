@@ -38,131 +38,6 @@ public class AccesoBaseDatosCitas {
 		return conn;
 	}
 
-	public static Usuario verificarUsuario(Connection conn, String user, String pass, String t) throws Exception{
-		String query = "SELECT * FROM [dbo].[usuario] WHERE userDni = ? and pass = ? and tipo = ?;";
-		PreparedStatement readStatement = conn.prepareStatement(query);
-		readStatement.setString(1, user);
-		readStatement.setString(2, pass);
-		readStatement.setString(3, t);
-		ResultSet resultSet = readStatement.executeQuery();
-		if (!resultSet.next()) {
-			System.out.println("No hay datos en la base de datos");
-			return null;
-		}
-		String dni = resultSet.getString("userDni");
-		String nombre = resultSet.getString("nombre");
-		String email = resultSet.getString("email");
-		String apellidos = resultSet.getString("apellidos");
-		String password = resultSet.getString("pass");
-		Date fechaDeNacimiento = new Date(resultSet.getTimestamp("fechaNacimiento").getTime());
-		String direccion = resultSet.getString("direccion");
-		String tipo = resultSet.getString("tipo");
-		Usuario usuario = new Usuario(nombre, apellidos, dni, email, password, fechaDeNacimiento, direccion, tipo); 
-		
-		return usuario;
-	}
-
-	public static Boolean setUsuario (Connection conn, String nombre, String apellidos, String dni, String email, String password, Date fechaDeNacimiento, String direccion, String tipo) throws Exception{
-		Boolean esAgregado = false; 
-		PreparedStatement insertStatement = 
-			conn.prepareStatement("INSERT INTO [dbo].[usuario] (userDni, pass, nombre, email, apellidos, fechaNacimiento, direccion, tipo) VALUES (? , ? , ? , ? , ? , ? , ?)");
-		try{
-		insertStatement.setString(1, dni);
-		insertStatement.setString(2, password);
-		insertStatement.setString(3, nombre);
-		insertStatement.setString(4, email);
-		insertStatement.setString(5, apellidos);
-		insertStatement.setTimestamp(6, new java.sql.Timestamp( fechaDeNacimiento.getTime()));
-		insertStatement.setString(7, direccion);
-		insertStatement.setString(8, tipo);
-		insertStatement.executeUpdate();
-
-		esAgregado = true; 
-		}
-		catch (Exception e)
-		{
-			System.out.println(e);
-			throw new Exception("Error al introducir el usuario", e); 
-		}
-		return esAgregado;
-	}
-
-	public static Boolean eliminarUsuario (Connection conn, Usuario usuario) throws Exception{
-		Boolean esEliminado = false; 
-		try{
-			String query = "DELETE FROM [dbo].[usuario] WHERE userDni = ? and tipo = ?;";
-			PreparedStatement deleteStatement = conn.prepareStatement(query);			
-			deleteStatement.setString(1, usuario.getDni());
-			deleteStatement.setString(2, usuario.getTipo_usuario());
-			deleteStatement.executeUpdate();
-			esEliminado = true; 
-		}
-		catch (Exception e){
-			System.out.println(e);
-			throw new Exception("Error al eliminar el usuario", e); 
-		}
-		return esEliminado;
-	}
-
-	public static Usuario getUsuario (Connection conn, String user, String tipoUsuario) throws Exception{
-		String query = "SELECT * FROM [dbo].[usuario] WHERE userDni = ? AND tipo = ?;";
-		PreparedStatement readStatement = conn.prepareStatement(query);
-		readStatement.setString(1, user);
-		readStatement.setString(2, tipoUsuario);
-		ResultSet resultSet = null; 
-		try{
-			resultSet = readStatement.executeQuery();
-		}
-		catch (Exception e)
-		{
-			throw new Exception("Error al obtener el usuario", e); 
-		}
-
-		if (!resultSet.next()) {
-			System.out.println("No hay datos en la base de datos!");
-			return null;
-		}
-		String dni = resultSet.getString("userDni");
-		String pass = resultSet.getString("pass");
-		String nombre = resultSet.getString("nombre");
-		String email = resultSet.getString("email"); 
-		String apellidos = resultSet.getString("apellidos");
-		Date fechaDeNacimiento = new Date(resultSet.getTimestamp("fechaNacimiento").getTime());
-		String direccion = resultSet.getString("direccion");
-		String tipo = resultSet.getString("tipo");
-		// Se podria hacer un query con el user, tipo y contrasenia, asi un user puede pertenecer a distintos roles.
-
-		Usuario usuario = new Usuario(nombre, apellidos, dni, email, pass, fechaDeNacimiento, direccion, tipo); 
-
-		return usuario; 
-	}
-
-	public static Boolean modificarUsuario (Connection conn, Usuario usuarioAntiguo, Usuario usuarioNuevo) throws Exception{
-		Boolean haSidoModificado = false; 
-
-		PreparedStatement updateStatement = 
-			conn.prepareStatement("UPDATE [dbo].[usuario] SET userDni = ?, nombre = ?, pass = ?, email = ?, apellidos = ?, fechaNacimiento = ?,"
-			 + "direccion = ?, tipo = ? WHERE userDni = ? and tipo = ?;");
-
-			updateStatement.setString(1, usuarioNuevo.getDni());
-			updateStatement.setString(2, usuarioNuevo.getNombre());
-			updateStatement.setString(3, usuarioNuevo.getPassword());
-			updateStatement.setString(4, usuarioNuevo.getEmail());	
-			updateStatement.setString(5, usuarioNuevo.getApellidos());
-			updateStatement.setTimestamp(6, new java.sql.Timestamp( usuarioNuevo.getFechaDeNacimiento().getTime()));
-			updateStatement.setString(7, usuarioNuevo.getDireccion());
-			updateStatement.setString(8, usuarioNuevo.getTipo_usuario());
-			updateStatement.setString(9, usuarioAntiguo.getDni());
-			updateStatement.setString(10, usuarioAntiguo.getTipo_usuario());	
-			try {
-				updateStatement.executeUpdate();
-				haSidoModificado = true; 
-			} catch (Exception e) {
-				throw new Exception("Error al intentar modificar el usuario", e); 
-			}
-		return haSidoModificado; 
-	}
-
 	///////////////// Citas //////////////////
 
 	public static List<Cita> obtenerCitas (Connection conn) throws Exception{
@@ -261,7 +136,7 @@ public class AccesoBaseDatosCitas {
 	}
 
 	public static Boolean reservaCita (Connection conn, String dniPaciente, String idCita) throws Exception {
-		Boolean haSidoModificado = false;
+		Boolean haSidoModificado = false; 
 
 		PreparedStatement updateStatement = conn.prepareStatement("UPDATE [dbo].[citas] SET dniPaciente = ? "+
 		"where dniPaciente IS NULL and id = ? and dniMedico <> ? and ? in (SELECT userDni from "+
@@ -276,20 +151,6 @@ public class AccesoBaseDatosCitas {
 			haSidoModificado = true; 
 		} catch (Exception e) {
 			throw new Exception("Error al intentar modificar el el usuario", e); 
-		}
-
-		if (haSidoModificado.equals(true)){
-			Usuario user = getUsuario(conn, dniPaciente, "paciente"); 
-			System.out.println(user);
-			Cita cita = obtenerCita(conn, idCita);
-			email e = new email(); 
-			String asunto = "Usted ha reservado una cita medica"; 
-			String destino =  user.getEmail(); 
-			String mensaje = "Estimado/a " + user.getNombre() + " " + user.getApellidos() + ", "+
-						"Usted ha reservado una cita con los siguientes datos:\n"+ 
-						cita + "\n\n"; 
-
-			e.SendMail(mensaje, destino, asunto);
 		}
 
 		return haSidoModificado; 
@@ -310,21 +171,6 @@ public class AccesoBaseDatosCitas {
 		} catch (Exception e) {
 			throw new Exception("Error al intentar anular la cita", e); 
 		}
-
-		if (haSidoModificado.equals(true)){
-			Usuario user = getUsuario(conn, dniPaciente, "paciente"); 
-			System.out.println(user);
-			Cita cita = obtenerCita(conn, idCita);
-			email e = new email(); 
-			String asunto = "Usted ha anulado una cita medica"; 
-			String destino =  user.getEmail(); 
-			String mensaje = "Estimado/a " + user.getNombre() + " " + user.getApellidos() + ", "+
-						"Usted ha anulado una cita con los siguientes datos:\n"+ 
-						cita + "\n\n"; 
-
-			e.SendMail(mensaje, destino, asunto);
-		}
-
 		return haSidoModificado; 
 	}
 
