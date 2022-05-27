@@ -7,14 +7,14 @@ public class Administrador extends Usuario {
 
     private FabricaUsuarios fu;
     
-    Administrador (String nom, String ap, String d, String pass, Date fech, String dir, String tipo) throws RemoteException{
-        super(nom, ap, d, pass, fech, dir, tipo);
+    Administrador (String nom, String ap, String d, String e, String pass, Date fech, String dir, String tipo) throws RemoteException{
+        super(nom, ap, d,e, pass, fech, dir, tipo);
 
     }
 
     // Devuelve: True si ha tenido exito, False si no
-    public Boolean agregarUsuario(String nombre, String apellidos, String dni, String password, Date fechaDeNacimiento, String direccion , String tipo) throws RemoteException{
-        return fu.agregarUsuario(nombre, apellidos, dni, password, fechaDeNacimiento, direccion, tipo);
+    public Boolean agregarUsuario(String nombre, String apellidos, String dni, String password, Date fechaDeNacimiento, String direccion , String tipo,String email) throws RemoteException{
+        return fu.agregarUsuario(nombre, apellidos, dni, password, fechaDeNacimiento, direccion, tipo,email);
     }
     // Devuelve: True si ha tenido exito, False si no
     public Boolean eliminarUsuario(Usuario usuario) throws RemoteException{

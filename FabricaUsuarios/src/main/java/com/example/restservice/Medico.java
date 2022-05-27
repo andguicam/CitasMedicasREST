@@ -6,8 +6,8 @@ import java.util.List;
 
 public class Medico extends Usuario {
     private ServicioCitas sc;
-    Medico (String nom, String ap, String d, String pass, Date fech, String dir, String tipo) throws RemoteException{
-        super(nom, ap, d, pass, fech, dir, tipo);
+    Medico (String nom, String ap, String d,String e, String pass, Date fech, String dir, String tipo) throws RemoteException{
+        super(nom, ap, d,e, pass, fech, dir, tipo);
  
     }
 

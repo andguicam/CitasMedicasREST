@@ -1,4 +1,4 @@
-package com.example.restservice;
+package com.example.restservice; 
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,9 +9,9 @@ public class Cita implements Serializable{
     private Date fechaInicio;
     private Date fechaFin;
     private String consulta;
-    private Medico medicoResponsable;
+    private Usuario medicoResponsable;
     
-    public Cita(String id, Date fechaInicio, Date fechaFin, String consulta, Medico medicoResponsable) {
+    public Cita(String id, Date fechaInicio, Date fechaFin, String consulta, Usuario medicoResponsable) {
         this.id = id;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -51,20 +51,18 @@ public class Cita implements Serializable{
         this.consulta = consulta;
     }
 
-    public Medico getMedicoResponsable() {
+    public Usuario getMedicoResponsable() {
         return medicoResponsable;
     }
 
-    public void setMedicoResponsable(Medico medicoResponsable) {
+    public void setMedicoResponsable(Usuario medicoResponsable) {
         this.medicoResponsable = medicoResponsable;
     }
     
     public String toString () {
     	
-    	return "ID: " + this.id + 
-    			" | Fecha de inicio: "+ this.fechaInicio + 
-    			" | Fecha de fin: "+ this.fechaFin + 
-    			" | Consulta: "+ this.consulta + 
-    			" | Medico Responsable: " + this.medicoResponsable.getNombre() + " " + this.medicoResponsable.getApellidos(); 
+    	return  " Fecha: "+ this.fechaInicio +  "\n" +
+    			"Consulta: "+ this.consulta + "\n" +
+    			"Medico: " + this.medicoResponsable.getNombre() + " " + this.medicoResponsable.getApellidos(); 
     }
 }

@@ -43,15 +43,16 @@ public class FabricaUsuariosImpl extends UnicastRemoteObject implements FabricaU
             String pass = usuario.getPassword(); 
             Date fech = usuario.getFechaDeNacimiento(); 
             String dir = usuario.getDireccion(); 
+            String email = usuario.getEmail();
         
             if ("paciente".equals(tipo)) {
-                rol = new Paciente(nom, ap, d, pass, fech, dir, tipo);
+                rol = new Paciente(nom, ap, d,email, pass, fech, dir, tipo);
             }
             else if ("medico".equals(tipo)) {
-                rol = new Medico(nom, ap, d, pass, fech, dir, tipo);
+                rol = new Medico(nom, ap, d,email, pass, fech, dir, tipo);
             } 
             else if("administrador".equals(tipo)){
-                rol = new Administrador(nom, ap, d, pass, fech, dir, tipo);
+                rol = new Administrador(nom, ap, d,email, pass, fech, dir, tipo);
             }
             
         }
@@ -59,10 +60,10 @@ public class FabricaUsuariosImpl extends UnicastRemoteObject implements FabricaU
     }
 
     @Override
-    public Boolean agregarUsuario(String nombre, String apellidos, String dni, String password, Date fechaDeNacimiento, String direccion, String tipo) throws RemoteException {
+    public Boolean agregarUsuario(String nombre, String apellidos, String dni, String password, Date fechaDeNacimiento, String direccion, String tipo, String email) throws RemoteException {
         Boolean esAgregado = false;
         try {
-            esAgregado = AccesoBaseDatos.setUsuario(conn, nombre, apellidos, dni, password, fechaDeNacimiento, direccion, tipo );
+            esAgregado = AccesoBaseDatos.setUsuario(conn, nombre, apellidos, dni, email, password, fechaDeNacimiento, direccion, tipo );
         } catch (Exception e) {
             System.out.println(e); 
         }

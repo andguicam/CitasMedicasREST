@@ -38,12 +38,13 @@ public class FabricaUsuariosController {
     @GetMapping("/agregarUsuario")
     public Boolean agregarUsuario(
             @RequestParam(value = "nombre") String nombre, @RequestParam(value = "apellidos") String apell,  @RequestParam(value = "dni") String dni,
-            @RequestParam(value = "password") String pass,@RequestParam(value = "fecha") String fecha,@RequestParam(value = "direccion") String direccion, @RequestParam(value = "tipo") String tipo) {
+            @RequestParam(value = "password") String pass,@RequestParam(value = "fecha") String fecha,@RequestParam(value = "direccion") String direccion, @RequestParam(value = "email") String email,
+            @RequestParam(value = "tipo") String tipo) {
         
         Date fechaNac;
         try {
             fechaNac = new SimpleDateFormat("yyyy-MM-DD").parse(fecha);
-            Boolean result=this.fu.agregarUsuario(nombre, apell, dni, pass, fechaNac, direccion, tipo);
+            Boolean result=this.fu.agregarUsuario(nombre, apell, dni, pass, fechaNac, direccion, tipo, email);
 
             return result;
 
@@ -94,12 +95,13 @@ public class FabricaUsuariosController {
             @RequestParam(value = "dni_ant") String dni_ant, @RequestParam(value = "tipo_ant") String tipo_ant, @RequestParam(value = "dni_nuevo") String dni_nuevo,
             @RequestParam(value = "nombre") String nombre, @RequestParam(value = "apellidos") String apellidos,
             @RequestParam(value = "password") String password, @RequestParam(value = "fecha") String fecha,
-            @RequestParam(value = "direccion") String direccion, @RequestParam(value = "tipo") String tipo ) {
+            @RequestParam(value = "direccion") String direccion, @RequestParam(value = "tipo") String tipo,
+            @RequestParam(value = "email") String email ) {
 
         try {
             Usuario user_ant = this.fu.getUsuario(dni_ant, tipo_ant);
             Date fechaNac = new SimpleDateFormat("yyyy-MM-DD").parse(fecha);
-            Usuario user_nuevo = new Usuario(nombre, apellidos, dni_nuevo, password, fechaNac, direccion, tipo);
+            Usuario user_nuevo = new Usuario(nombre, apellidos, dni_nuevo,email, password, fechaNac, direccion, tipo);
 
             Boolean result = this.fu.modificarUsuario(user_ant,user_nuevo);
             return result;
@@ -119,6 +121,7 @@ public class FabricaUsuariosController {
     public List<Usuario> obtenerUsuarios(){
         try {
             List<Usuario> lista= this.fu.obtenerUsuarios();
+            System.out.println("Consulta realizada");
             return lista;
         } catch (RemoteException e) {
             // TODO Auto-generated catch block

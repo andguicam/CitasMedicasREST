@@ -33,8 +33,10 @@ public class ServicioCitasImpl extends UnicastRemoteObject implements ServicioCi
     @Override
     public Boolean reservarCita(Usuario user, Cita cita) throws RemoteException {
         Boolean haSidoModificado = false; 
+        String dni = user.getDni();
+        String id = cita.getId();
         try {
-            AccesoBaseDatos.resrvaCita(conn, user, cita);
+            AccesoBaseDatos.reservaCita(conn, dni, id);
         } catch (Exception e) {
             System.out.println(e);
         } 
@@ -44,8 +46,10 @@ public class ServicioCitasImpl extends UnicastRemoteObject implements ServicioCi
     @Override
     public Boolean anularCita(Usuario user, Cita cita) throws RemoteException {
         Boolean haSidoModificado = false; 
+        String dni = user.getDni();
+        String id = cita.getId();
         try {
-            AccesoBaseDatos.anularCita(conn, user, cita);
+            AccesoBaseDatos.anularCita(conn, dni, id);
         } catch (Exception e) {
             System.out.println(e);
         } 
@@ -55,8 +59,9 @@ public class ServicioCitasImpl extends UnicastRemoteObject implements ServicioCi
     @Override
     public Boolean agregarCita(String id, Date fechaInicio, Date fechaFin, String consulta, Medico medicoResponsable) throws RemoteException {
         Boolean esAgregado = false; 
+        String dni = medicoResponsable.getDni();
         try {
-            esAgregado = AccesoBaseDatos.agregarCita(conn, id, fechaInicio, fechaFin, consulta, medicoResponsable);
+            esAgregado = AccesoBaseDatos.agregarCita(conn, fechaInicio, fechaFin, consulta, dni);
         } catch (Exception e) {
             System.out.println(e);
         } 
@@ -65,9 +70,10 @@ public class ServicioCitasImpl extends UnicastRemoteObject implements ServicioCi
 
     @Override
     public Boolean eliminarCita(Cita cita) throws RemoteException {
-        Boolean esEliminado = false; 
+        Boolean esEliminado = false;
+        String id = cita.getId();
         try {
-            esEliminado = AccesoBaseDatos.eliminarCita(conn, cita);
+            esEliminado = AccesoBaseDatos.eliminarCita(conn, id);
         } catch (Exception e) {
             System.out.println(e);
         } 
