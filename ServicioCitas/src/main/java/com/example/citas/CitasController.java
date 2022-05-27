@@ -37,6 +37,19 @@ public class CitasController {
         return citas; 
     }
 
+    @GetMapping("/obtenerListaCitasMedico")
+    
+    public List<Cita> obtenerListaCitasMedico(@RequestParam (value = "dniMedico") String dniMedico) {
+        List<Cita> citas = null;
+        try {
+            citas = AccesoBaseDatosCitas.citasMedico(conn,dniMedico);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return citas;
+    }
+    
+
     @GetMapping("/citasReservadas")
     public List<Cita> citasReservadas(
     @RequestParam( value = "dniPaciente") String dniPaciente

@@ -24,6 +24,11 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
 <artifactId>spring-boot-starter-web</artifactId>
 </dependency>
 <dependency>
+    <groupId>com.sun.mail</groupId>
+    <artifactId>javax.mail</artifactId>
+    <version>1.6.2</version>
+</dependency>
+<dependency>
 <groupId>org.springframework.boot</groupId>
 <artifactId>spring-boot-starter-test</artifactId>
 <scope>test</scope>

@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Paciente extends Usuario {
     ServicioCitas sc;
-    Paciente (String nom, String ap, String d, String pass, Date fech, String dir, String tipo){
-        super(nom, ap, d, pass,  fech, dir, tipo);
+    Paciente (String nom, String ap, String d,String e, String pass, Date fech, String dir, String tipo){
+        super(nom, ap, d,e, pass,  fech, dir, tipo);
         this.sc = null; 
     }
 

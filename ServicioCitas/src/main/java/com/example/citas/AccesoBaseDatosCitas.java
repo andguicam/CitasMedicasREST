@@ -229,6 +229,39 @@ public class AccesoBaseDatosCitas {
 		return citas; 
 	}
 
+	public static List<Cita> citasMedico(Connection conn, String dniMedico) throws Exception {
+		List<Cita> citas = new LinkedList<Cita>();
+		PreparedStatement query = conn.prepareStatement(
+				"SELECT * from [dbo].[usuario], [dbo].[citas] where userDni = dniMedico and tipo = 'medico' and dniMedico = ?;");
+		ResultSet resultSet = null;
+		try {
+			query.setString(1, dniMedico);
+			resultSet = query.executeQuery();
+		} catch (Exception e) {
+			throw new Exception("Error a la hora de obtener todas las citas");
+		}
+		while (resultSet.next()) {
+			String dni = resultSet.getString("userDni");
+			String pass = resultSet.getString("pass");
+			String nombre = resultSet.getString("nombre");
+			String email = resultSet.getString("email");
+			String apellidos = resultSet.getString("apellidos");
+			Date fechaDeNacimiento = new Date(resultSet.getTimestamp("fechaNacimiento").getTime());
+			String direccion = resultSet.getString("direccion");
+			String tipo = resultSet.getString("tipo");
+			Usuario medico = new Usuario(nombre, apellidos, dni, email, pass, fechaDeNacimiento, direccion, tipo);
+
+			String id = resultSet.getString("id");
+			Date inicio = new Date(resultSet.getTimestamp("fechaInicio").getTime());
+			Date fin = new Date(resultSet.getTimestamp("fechaFin").getTime());
+			String consulta = resultSet.getString("consulta");
+			Cita cita = new Cita(id, inicio, fin, consulta, medico);
+			citas.add(cita);
+		}
+
+		return citas;
+	}
+	
 	public static List<Cita> citasDisponibles (Connection conn) throws Exception{
 		List <Cita> citas = new LinkedList<Cita>(); 
 		PreparedStatement query = conn.prepareStatement("SELECT * from [dbo].[usuario], [dbo].[citas] where userDni = dniMedico and tipo = 'medico' and dniPaciente IS NULL;"); 
