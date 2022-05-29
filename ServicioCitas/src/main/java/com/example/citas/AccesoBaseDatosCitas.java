@@ -317,6 +317,7 @@ public class AccesoBaseDatosCitas {
 			System.out.println(user);
 			Cita cita = obtenerCita(conn, idCita);
 			email e = new email(); 
+			// El email que se envia al paciente
 			String asunto = "Usted ha reservado una cita medica"; 
 			String destino =  user.getEmail(); 
 			String mensaje = "Estimado/a " + user.getNombre() + " " + user.getApellidos() + ", "+
@@ -324,6 +325,16 @@ public class AccesoBaseDatosCitas {
 						cita + "\n\n"; 
 
 			e.SendMail(mensaje, destino, asunto);
+
+			// Email que se envia al medico
+			email e2 = new email(); 
+			String asunto2 = "Un paciente ha reservado una cita"; 
+			String destino2 = cita.getMedicoResponsable().getEmail(); 
+			String mensaje2 = "Estimado/a " + cita.getMedicoResponsable().getNombre() + " " + cita.getMedicoResponsable().getApellidos() + ", "+
+								"El paciente "+ user.getNombre() + " " + user.getApellidos() + " con el DNI "+ user.getDni() + 
+								" ha reservado una cita con los siguientes datos:\n"+ 
+								cita + "\n\n"; 
+			e2.SendMail(mensaje2, destino2, asunto2);
 		}
 
 		return haSidoModificado; 
@@ -349,6 +360,8 @@ public class AccesoBaseDatosCitas {
 			Usuario user = getUsuario(conn, dniPaciente, "paciente"); 
 			System.out.println(user);
 			Cita cita = obtenerCita(conn, idCita);
+
+			// Email que se envia al paciente
 			email e = new email(); 
 			String asunto = "Usted ha anulado una cita medica"; 
 			String destino =  user.getEmail(); 
@@ -357,6 +370,16 @@ public class AccesoBaseDatosCitas {
 						cita + "\n\n"; 
 
 			e.SendMail(mensaje, destino, asunto);
+
+			// Email que se envia al medico
+			email e2 = new email(); 
+			String asunto2 = "Un paciente ha anulado una cita"; 
+			String destino2 = cita.getMedicoResponsable().getEmail(); 
+			String mensaje2 = "Estimado/a " + cita.getMedicoResponsable().getNombre() + " " + cita.getMedicoResponsable().getApellidos() + ", "+
+								"El paciente "+ user.getNombre() + " " + user.getApellidos() + " con el DNI "+ user.getDni() + 
+								" ha anulado una cita con los siguientes datos:\n"+ 
+								cita + "\n\n"; 
+			e2.SendMail(mensaje2, destino2, asunto2);
 		}
 
 		return haSidoModificado; 

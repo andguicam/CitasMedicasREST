@@ -2,6 +2,7 @@ package com.example.citas;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class Cita implements Serializable{
     private static final long serialVersionUID = 1L;
@@ -61,7 +62,7 @@ public class Cita implements Serializable{
     
     public String toString () {
     	
-    	return  " Fecha: "+ this.fechaInicio +  "\n" +
+    	return  " Fecha: "+ new SimpleDateFormat("dd/MM/yy HH:mm").format(this.fechaInicio) +  
     			"Consulta: "+ this.consulta + "\n" +
     			"Medico: " + this.medicoResponsable.getNombre() + " " + this.medicoResponsable.getApellidos(); 
     }
