@@ -64,10 +64,12 @@ public class CitasController {
     }
 
     @GetMapping("/citasDisponibles")
-    public List<Cita> citasDisponibles() {
+    public List<Cita> citasDisponibles(
+        @RequestParam( value = "dniPaciente") String dniPaciente
+    ) {
         List<Cita> citas = null; 
         try {
-            citas =  AccesoBaseDatosCitas.citasDisponibles(conn);
+            citas =  AccesoBaseDatosCitas.citasDisponibles(conn, dniPaciente);
         } catch (Exception e) {
             e.printStackTrace();
         }

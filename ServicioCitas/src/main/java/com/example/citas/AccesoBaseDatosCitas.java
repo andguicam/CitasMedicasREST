@@ -262,9 +262,10 @@ public class AccesoBaseDatosCitas {
 		return citas;
 	}
 	
-	public static List<Cita> citasDisponibles (Connection conn) throws Exception{
+	public static List<Cita> citasDisponibles (Connection conn, String dniPaciente) throws Exception{
 		List <Cita> citas = new LinkedList<Cita>(); 
-		PreparedStatement query = conn.prepareStatement("SELECT * from [dbo].[usuario], [dbo].[citas] where userDni = dniMedico and tipo = 'medico' and dniPaciente IS NULL;"); 
+		PreparedStatement query = conn.prepareStatement("SELECT * from [dbo].[usuario], [dbo].[citas] where userDni = dniMedico and tipo = 'medico' and dniPaciente IS NULL and dniMedico <> ?;"); 
+		query.setString(1, dniPaciente);
 		ResultSet resultSet = null; 
 		try {
 			resultSet = query.executeQuery();
